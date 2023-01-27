@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     private var lemonImage: ImageView? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -105,8 +104,8 @@ class MainActivity : AppCompatActivity() {
         //  lemonade making progression (or at least make some changes to the current state in the
         //  case of squeezing the lemon). That should be done in this conditional statement
 
-        when {
-            lemonadeState == SELECT -> {
+        when (lemonadeState) {
+            SELECT -> {
                 lemonadeState = SQUEEZE
                 lemonSize = LemonTree().pick()
                 squeezeCount = 0
@@ -115,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            lemonadeState == SQUEEZE -> {
+            SQUEEZE -> {
                 squeezeCount += 1
                 lemonSize -= 1
 
@@ -129,7 +128,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            lemonadeState == DRINK -> {
+            DRINK -> {
                 lemonadeState = RESTART
                 lemonSize = -1
 
@@ -137,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            lemonadeState == RESTART -> {
+            RESTART -> {
                 lemonadeState = SELECT
                 setViewElements()
 
@@ -169,24 +168,28 @@ class MainActivity : AppCompatActivity() {
         val textAction: TextView = findViewById(R.id.text_action)
         // TODO: set up a conditional that tracks the lemonadeState
 
-        if (lemonadeState == SELECT) {
-            lemonImage?.setImageResource(R.drawable.lemon_tree)
-            textAction.setText( R.string.lemon_select)
-        }
 
-        if (lemonadeState == SQUEEZE) {
-            lemonImage?.setImageResource(R.drawable.lemon_squeeze)
-            textAction.setText( R.string.lemon_squeeze)
-        }
+        when (lemonadeState) {
+            SELECT -> {
+                lemonImage?.setImageResource(R.drawable.lemon_tree)
+                textAction.setText(R.string.lemon_select)
+            }
 
-        if (lemonadeState == DRINK) {
-            lemonImage?.setImageResource(R.drawable.lemon_drink)
-            textAction.setText( R.string.lemon_drink)
-        }
+            SQUEEZE -> {
+                lemonImage?.setImageResource(R.drawable.lemon_squeeze)
+                textAction.setText(R.string.lemon_squeeze)
+            }
 
-        if (lemonadeState == RESTART) {
-            lemonImage?.setImageResource(R.drawable.lemon_restart)
-            textAction.setText( R.string.lemon_empty_glass)
+            DRINK -> {
+                lemonImage?.setImageResource(R.drawable.lemon_drink)
+                textAction.setText(R.string.lemon_drink)
+            }
+
+            RESTART -> {
+                lemonImage?.setImageResource(R.drawable.lemon_restart)
+                textAction.setText(R.string.lemon_empty_glass)
+            }
+
         }
 
         // TODO: for each state, the textAction TextView should be set to the corresponding string from
